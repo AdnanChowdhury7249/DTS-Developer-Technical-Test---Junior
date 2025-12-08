@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db.database import database
+from backend.routes.routes import router as routes
 
 app = FastAPI()
 
@@ -29,3 +30,6 @@ async def shutdown():
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+
+app.include_router(routes)
