@@ -82,12 +82,13 @@ function CreateTaskForm({
         <h2 className="text-xl font-semibold mb-4">Create Task</h2>
 
         <div className="mb-3">
-          <label className="block text-xs font-medium text-gray-700 mb-1">
+          <label className="block text-xs font-medium text-gray-700 mb-1" htmlFor="title">
             Title *
           </label>
 
           <input
             type="text"
+            id="title"
             name="title"
             value={taskData.title}
             onChange={handleChange}
@@ -97,12 +98,15 @@ function CreateTaskForm({
         </div>
 
         <div className="mb-3">
-          <label className="block text-xs font-medium text-gray-700 mb-1">
+          <label className="block text-xs font-medium text-gray-700 mb-1"
+            htmlFor="description"
+          >
             Description (optional)
           </label>
 
           <textarea
             name="description"
+            id="description"
             value={taskData.description}
             onChange={handleChange}
             className="w-full border border-gray-300 px-2 py-1.5 rounded-md text-sm h-20 resize-none focus:ring-blue-500 focus:border-blue-500"
@@ -110,11 +114,13 @@ function CreateTaskForm({
         </div>
 
         <div className="mb-3">
-          <label className="block text-xs font-medium text-gray-700 mb-1">
+          <label className="block text-xs font-medium text-gray-700 mb-1"
+            htmlFor="status">
             Status *
           </label>
 
           <select
+            id="status"
             name="status"
             value={taskData.status}
             onChange={handleChange}
@@ -129,11 +135,13 @@ function CreateTaskForm({
         </div>
 
         <div className="mb-3">
-          <label className="block text-xs font-medium text-gray-700 mb-1">
+          <label className="block text-xs font-medium text-gray-700 mb-1"
+            htmlFor="due_at">
             Due date *
           </label>
 
           <input
+            id="due_at"
             type="date"
             name="due_at"
             value={taskData.due_at}
