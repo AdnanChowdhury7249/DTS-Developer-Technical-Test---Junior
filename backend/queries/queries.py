@@ -7,7 +7,7 @@ async def create_task_query(title: str, description: str, status: str, due_at: d
     query = """
         INSERT INTO tasks (title, description, status, due_at)
         VALUES (:title, :description, :status, :due_at)
-        RETURNING id, title, description, status, due_at;
+        RETURNING id;
     """
 
     values = {
@@ -22,7 +22,7 @@ async def create_task_query(title: str, description: str, status: str, due_at: d
     if task_id_row is None:
         raise HTTPException(status_code=500, detail="Failed to create task")
 
-    return dict(task_id_row)
+    return task_id_row["id"]
 
 
 async def get_tasks_query():

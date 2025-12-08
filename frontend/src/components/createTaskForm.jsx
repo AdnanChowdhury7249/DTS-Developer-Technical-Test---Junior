@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { createTask } from "../api/api";
 
-
-
-
 function CreateTaskForm({
   initialData = {},
   buttonLabel = "Create Task",
@@ -56,7 +53,7 @@ function CreateTaskForm({
       };
 
 
-
+      const res = await createTask(payload);
 
       setSuccessMessage(`Task ${payload.title} was created successfully.`);
 
