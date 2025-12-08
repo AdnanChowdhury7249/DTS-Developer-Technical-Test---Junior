@@ -18,7 +18,6 @@ def test_create_task_and_get_tasks():
     }
 
     with TestClient(app) as client:
-        # startup event runs here → database.connect() called
 
         create_resp = client.post("/api/create_task", json=payload)
         assert create_resp.status_code == 200
@@ -28,3 +27,27 @@ def test_create_task_and_get_tasks():
         tasks = get_resp.json()
 
         assert any(t["title"] == "Test from pytest" for t in tasks)
+
+
+def test_create_task_without_status():
+    payload = {
+        "title": "Test from pytest",
+        "description": "pytest description",
+        "due_at": "2025-12-31",
+    }
+
+    with TestClient(app) as client:
+        create_resp = client.post("/api/create_task", json=payload)
+        assert create_resp.status_code == 422
+
+
+def description():
+    payload = {
+        "title": "Test from pytest",
+        "status": "pending",
+        "due_at": "2025-12-31",
+    }
+
+    with TestClient(app) as client:
+        create_resp = client.post("/api/create_task", json=payload)
+        assert create_resp.status_code == 200
