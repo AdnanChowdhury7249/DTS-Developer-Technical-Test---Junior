@@ -1,30 +1,52 @@
+import CreateTaskForm from "./components/createTaskForm";
 import { useEffect, useState } from "react";
+import { getAllTasks } from "./api/api";
+import Banner from './components/Banner';
 
 function App() {
-  const [message, setMessage] = useState("");
-  const [value, setValue] = useState("");
+  const [tasks, setTasks] = useState([]);
+
+  const fetchTasks = async () => {
+    const response = await getAllTasks();
+    setTasks(response.data);
+  };
 
   useEffect(() => {
-    // GET /
-    fetch("http://127.0.0.1:8000/")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch((err) => console.error("Error calling /:", err));
-
-    // GET /api/example
-    fetch("http://127.0.0.1:8000/api/example")
-      .then((res) => res.json())
-      .then((data) => setValue(data.value))
-      .catch((err) => console.error("Error calling /api/example:", err));
+    fetchTasks();
   }, []);
 
   return (
-    <div style={{ padding: "4rem", fontFamily: "sans-serif", color: "white" }}>
-      <h1 style={{ fontSize: "3rem", marginBottom: "3rem" }}>
-        FastAPI + Vite + React
-      </h1>
-      <p>Message from backend: {message}</p>
-      <p>Value from /api/example: {value}</p>
+    <div>
+      <Banner />
+      <div className="p-4 max-w-4xl mx-auto">
+
+
+        <div className="mt-6">
+          <CreateTaskForm onSuccess={fetchTasks} />
+        </div>
+
+        <h2 className="text-xl font-semibold mt-10 mb-3">All Tasks</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {tasks.map((t) => (
+            <div
+              key={t.id}
+              className="bg-white shadow-sm rounded-lg p-4 border border-gray-200"
+            >
+              <h3 className="font-semibold text-lg text-gray-900">{t.title}</h3>
+
+              {t.description && (
+                <p className="text-gray-600 text-sm mt-1">{t.description}</p>
+              )}
+
+              <div className="flex justify-between text-sm text-gray-500 mt-3">
+                <span className="capitalize">Status: {t.status}</span>
+                <span>Due: {new Date(t.due_at).toLocaleDateString("en-GB")}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

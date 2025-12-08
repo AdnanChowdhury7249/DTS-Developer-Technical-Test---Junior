@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, requests
+from fastapi import APIRouter, HTTPException
 from backend.queries.queries import create_task_query, get_tasks_query
 from backend.schema.task_schemas import TaskCreate
 
